@@ -1,0 +1,39 @@
+<!DOCTYPE html>
+<html lang="en" xmlns:th="http://www.w3.org/1999/xhtml">
+<head>
+    <meta charset="UTF-8">
+    <title>Users</title>
+</head>
+<body>
+<div align="center">
+    <h1>All users</h1>
+    <br/>
+    <table border="1" cellpadding="10">
+        <thead>
+        <tr>
+            <th>Name</th>
+            <th>Surname</th>
+            <th>Profession</th>
+            <th>Authority</th>
+            <th>Update</th>
+            <th>Delete</th>
+        </tr>
+        </thead>
+        <tbody>
+        <tr th:each="user : ${listUsers}">
+            <td th:text="${user.name}">Name</td>
+            <td th:text="${user.surname}">Surname</td>
+            <td th:text="${user.profession}">Profession</td>
+            <td th:text="${user.toStringRoles()}">Roles</th>
+            <td><a th:href="@{/admin/edit(id=${user.id})}">Edit</a></td>
+            <td><a th:href="@{/admin/delete(id=${user.id})}">Delete</a></td>
+        </tr>
+        </tbody>
+    </table>
+    <br/>
+    <a href="/admin/newuser">Add user</a>
+    <br/><br/>
+    <a href="/logout">Log out</a>
+</div>
+</body>
+</html>
