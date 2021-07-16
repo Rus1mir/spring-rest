@@ -15,8 +15,8 @@ public class User implements UserDetails {
     @GeneratedValue(strategy = GenerationType.IDENTITY)
     private Long id;
 
-    @Column(name = "username")
-    private String login;
+    @Column(name = "email")
+    private String email;
 
     @Column(name = "password")
     private String password;
@@ -30,21 +30,21 @@ public class User implements UserDetails {
     @Column(name = "surname")
     private String surname;
 
-    @Column(name = "profession")
-    private String profession;
+    @Column(name = "age")
+    private Integer age;
 
     @ManyToMany(fetch = FetchType.EAGER, cascade = CascadeType.MERGE)
     @JoinTable(name = "user_roles", joinColumns = @JoinColumn(name = "user_id"),
             inverseJoinColumns = @JoinColumn(name = "role_id"))
     private Set<Role> roles;
 
-    public User(String login, String password, String confirmPass, String name, String surname, String profession, Set<Role> roles) {
-        this.login = login;
+    public User(String email, String password, String confirmPass, String name, String surname, Integer age, Set<Role> roles) {
+        this.email = email;
         this.password = password;
         this.confirmPass = confirmPass;
         this.name = name;
         this.surname = surname;
-        this.profession = profession;
+        this.age = age;
         this.roles = roles;
     }
 
@@ -59,17 +59,17 @@ public class User implements UserDetails {
         this.id = id;
     }
 
-    public String getLogin() {
-        return login;
+    public String getEmail() {
+        return email;
     }
 
-    public void setLogin(String username) {
-        this.login = username;
+    public void setEmail(String login) {
+        this.email = login;
     }
 
     @Override
     public String getUsername() {
-        return login;
+        return email;
     }
 
     public String getPassword() {
@@ -104,12 +104,12 @@ public class User implements UserDetails {
         this.surname = surname;
     }
 
-    public String getProfession() {
-        return profession;
+    public Integer getAge() {
+        return age;
     }
 
-    public void setProfession(String profession) {
-        this.profession = profession;
+    public void setAge(Integer age) {
+        this.age = age;
     }
 
     public Set<Role> getRoles() {

@@ -1,6 +1,7 @@
 package web.сontroller;
 
 import org.springframework.beans.factory.annotation.Autowired;
+import org.springframework.security.core.annotation.AuthenticationPrincipal;
 import org.springframework.stereotype.Controller;
 import org.springframework.ui.ModelMap;
 import org.springframework.web.bind.annotation.GetMapping;
@@ -18,17 +19,9 @@ public class UserController {
         this.userService = userService;
     }
 
-    @GetMapping(value = "/login")
-    public String loginPage() {
-        return "login";
+    @GetMapping("/")
+    public String showAllUsers(ModelMap model, @AuthenticationPrincipal User user) {
+        model.addAttribute("currentUser", user);
+        return "users";
     }
-
-    @GetMapping(value = "user/userpage")
-    public String UserPage(ModelMap model, Principal principal) {
-        User user = userService.findByLogin(principal.getName())
-                .orElseThrow(() -> new IllegalArgumentException("User with login: " + principal.getName() + " was not found"));
-        model.addAttribute("user", user);
-        return "userpage";
-    }
-
 }
