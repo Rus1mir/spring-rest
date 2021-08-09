@@ -6,9 +6,9 @@ import java.util.List;
 import java.util.Optional;
 
 public interface UserService {
-    void save(User user, Long[] roles);
+    void save(User user);
 
-    User update(User user, Long[] roles);
+    User update(User user);
 
     void deleteById(long id);
 

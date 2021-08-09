@@ -26,13 +26,11 @@ public class UserServiceImpl implements UserService {
     public UserServiceImpl() {
     }
 
-    public void save(User user, Long[] roles) {
-        addRolesToUser(user, roles);
+    public void save(User user) {
         userDao.save(user);
     }
 
-    public User update(User user, Long[] roles) {
-        addRolesToUser(user, roles);
+    public User update(User user) {
         return userDao.update(user);
     }
 
@@ -51,15 +49,6 @@ public class UserServiceImpl implements UserService {
     @Override
     public Optional<User> findByLogin(String login) {
         return userDao.findByLogin(login);
-    }
-
-    private void addRolesToUser(User user, Long[] roles) {
-        Set<Role> roleSet = new HashSet<>();
-        for (Long id : roles) {
-            roleSet.add(roleDao.findById(id).orElseThrow(() ->
-                    new IllegalArgumentException("Role with id: " + id + " was not found")));
-        }
-        user.setRoles(roleSet);
     }
 
 }
