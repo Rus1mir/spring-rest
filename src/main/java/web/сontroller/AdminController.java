@@ -35,16 +35,16 @@ public class AdminController {
     @GetMapping("/users/{id}")
     public ResponseEntity<User> getUser(@PathVariable("id") Long userId) {
         if (userId == null) {
-            return new ResponseEntity<>(HttpStatus.BAD_REQUEST);
+            return ResponseEntity.badRequest().build();
         }
         Optional<User> user = userService.findById(userId);
-        return user.map(u -> new ResponseEntity<>(u, HttpStatus.OK))
-                .orElseGet(() -> new ResponseEntity<>(HttpStatus.NOT_FOUND));
+        return user.map(ResponseEntity::ok)
+                .orElseGet(() -> ResponseEntity.notFound().build());
     }
 
     @PostMapping("/users")
     public ResponseEntity<User> saveUser(@RequestBody User user) {
-        this.userService.save(user);
+        userService.save(user);
         return ResponseEntity.ok(user);
     }
 
@@ -58,9 +58,9 @@ public class AdminController {
     public ResponseEntity<User> deleteUser(@PathVariable("id") Long id) {
         if (userService.findById(id).isPresent()) {
             userService.deleteById(id);
-            return new ResponseEntity<>(HttpStatus.NO_CONTENT);
+            return ResponseEntity.noContent().build();
         } else {
-            return new ResponseEntity<>(HttpStatus.NOT_FOUND);
+            return ResponseEntity.notFound().build();
         }
     }
 
@@ -69,9 +69,9 @@ public class AdminController {
         List<User> users = userService.findAll();
 
         if (users.isEmpty()) {
-            return new ResponseEntity<>(HttpStatus.NOT_FOUND);
+            return ResponseEntity.notFound().build();
         }
-        return new ResponseEntity<>(users, HttpStatus.OK);
+        return ResponseEntity.ok(users);
     }
 
     @GetMapping("/roles")
@@ -79,8 +79,8 @@ public class AdminController {
         List<Role> roles = this.roleService.findAll();
 
         if (roles.isEmpty()) {
-            return new ResponseEntity<>(HttpStatus.NOT_FOUND);
+            return ResponseEntity.notFound().build();
         }
-        return new ResponseEntity<>(roles, HttpStatus.OK);
+        return ResponseEntity.ok(roles);
     }
 }
